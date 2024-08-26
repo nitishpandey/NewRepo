@@ -46,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: 'Production'
+      name: 'b5gmd6h0ecd4bpfe'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
@@ -63,6 +63,5 @@ jobs:
         id: deploy-to-webapp
         with:
           app-name: 'upstox-app'
-         # slot-name: 'Production'
-          slot-name: 'b5gmd6h0ecd4bpfe'
+          slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4A9D375352084CF1B05E4C6DDB3C1D32 }}
