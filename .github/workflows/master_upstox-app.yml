@@ -63,5 +63,6 @@ jobs:
         id: deploy-to-webapp
         with:
           app-name: 'upstox-app'
-          slot-name: 'Production'
+         # slot-name: 'Production'
+          slot-name: 'b5gmd6h0ecd4bpfe'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4A9D375352084CF1B05E4C6DDB3C1D32 }}
