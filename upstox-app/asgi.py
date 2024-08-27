@@ -1,5 +1,5 @@
 """
-ASGI config for upstoxfno project.
+ASGI config for upstox-app project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
