@@ -55,7 +55,7 @@ ALLOWED_HOSTS = ['*']
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['upstox-app\\templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
