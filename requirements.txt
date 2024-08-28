@@ -1,5 +1,4 @@
 
 toml
-
-#upstox-python-sdk
 django
+upstox-python-sdk
