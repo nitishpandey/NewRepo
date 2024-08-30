@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import View
+from django.conf import settings
+from django.apps import apps
 import requests
 import json
 
@@ -8,14 +10,18 @@ class defaultView(View):
     def get(self, request):
         """Handles GET requests to this view."""
         # Logic for processing GET requests (e.g., displaying a form)
+        my_app_config = apps.get_app_config('polls')
+        localdomain = my_app_config.localdomain
+        azuredomain = my_app_config.azuredomain
+        print(my_app_config.UPSTOX_API)
 
         code = request.GET.get("code")
         #now use the code 
         your_client_id = '2f21b28b-6251-4c8e-861f-6218bdf7e4b6'
         your_client_secret = 'ojruk78aqh'
-        your_redirect_url = 'http://127.0.0.1:8000/polls'
-
-        api_url = 'https://api.upstox.com/v2/login/authorization/token'
+        your_redirect_url = localdomain + 'polls'
+        
+        api_url = my_app_config.UPSTOX_API +'login/authorization/token'
         headers = {
             'accept': 'application/json',
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -29,13 +35,16 @@ class defaultView(View):
                     'grant_type': 'authorization_code',
                 }
         print(data)
+        print(api_url)
         response = requests.post(api_url, headers=headers, data=data)
         
         print(response.status_code)
         print(response.json())
         #context = {'message': 'This is a GET request'}
         # return render(request, 'my_template.html', context)
-        context = {'my_json_data': json.dumps(response.json())}
+        context = {'my_json_data': json.dumps(response.json()),
+                   'localdomain': localdomain,
+                   'azuredomain': azuredomain}
         a = request.session['token'] = response.json()['access_token']   
         print( a)
         return render(request, 'json_template.html', context)
@@ -55,3 +64,24 @@ class userProfile(View):
         
         context = {'my_json_data': json.dumps(jsondata)}
         return render(request, 'json_template.html', context)
+
+class funds(View):
+    def get(self, request):
+        
+        url = settings.UPSTOX_API +'/user/get-funds-and-margin?segment=SEC'
+
+        headers = {
+            'Accept': 'application/json',
+            'Authorization': f'Bearer {request.session["token"]}'
+        }
+
+        response = requests.get(url, headers=headers)
+        print(request.session["token"])
+        print(response.status_code)
+        print(response.json())
+        context = {'my_json_data': json.dumps(response.json()),
+                   'localdomain': 'http://127.0.0.1:8000/',
+                   'azuredomain': 'https://upstox-app.azurewebsites.net/'}
+      
+        return render(request, 'json_template.html', context)
+ 

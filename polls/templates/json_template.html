@@ -14,7 +14,23 @@
         // Display the data (you can customize how you present it)
         document.write("<pre>" + JSON.stringify(jsonData, null, 2) + "</pre>");
     </script>
-    <a href="http://127.0.0.1:8000/">Start again</a> <br />
-    <a href="https://upstox-app.azurewebsites.net/"> ON azure</a>
+    <ol>
+        <li>
+    <a href="{{ localdomain }}">Start again</a> <br /></li>
+        <li>
+    <a href="{{ azuredomain }}"> On azure</a></li>
+    <br />
+
+        <li>
+    <a href="{{ localdomain}}/polls/funds">See funds on localhost </a> <br />
+            </li>
+
+    <li>
+    <a href="{{ localdomain}}/upstox-app/optionsdata">See options data on localhost </a> <br />
+            </li>
+    
+    </ol>
+
+    
 </body>
 </html>
