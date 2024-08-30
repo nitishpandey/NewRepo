@@ -1,7 +1,9 @@
 from django.urls import path
 
 from . import views
+from .viewclasses import defaultView
 
 urlpatterns = [
-    path("", views.index, name="index"),
+    path("", defaultView.as_view(), name="defaultViewClass"),
+    
 ]

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JSON Data</title>
+</head>
+<body>
+
+    <h1>JSON Data</h1>
+
+    <script>
+        // Get JSON data from Django context
+        const jsonData = {{ my_json_data|safe }};
+
+        // Display the data (you can customize how you present it)
+        document.write("<pre>" + JSON.stringify(jsonData, null, 2) + "</pre>");
+    </script>
+    <a href="http://127.0.0.1:8000/">Start again</a> <br />
+    <a href="https://upstox-app.azurewebsites.net/"> ON azure</a>
+</body>
+</html>
