@@ -67,8 +67,8 @@ class userProfile(View):
 
 class funds(View):
     def get(self, request):
-        
-        url = settings.UPSTOX_API +'/user/get-funds-and-margin?segment=SEC'
+        my_app_config = apps.get_app_config('polls')
+        url = my_app_config.UPSTOX_API +'/user/get-funds-and-margin?segment=SEC'
 
         headers = {
             'Accept': 'application/json',
@@ -84,4 +84,27 @@ class funds(View):
                    'azuredomain': 'https://upstox-app.azurewebsites.net/'}
       
         return render(request, 'json_template.html', context)
+
+class optionsdata(View):
+        def get(self, request):
+            
+            my_app_config = apps.get_app_config('polls')
+            url = my_app_config.UPSTOX_API + 'option/chain'
+            params = {
+                'instrument_key': 'NSE_INDEX|Nifty 50',
+                'expiry_date': '2024-08-29'
+            }
+            headers = {
+            'Accept': 'application/json',
+            'Authorization': f'Bearer {request.session["token"]}'
+            }
+
+            response = requests.get(url, params=params, headers=headers)
+
+            print(response.json())
+            context = {'my_json_data': json.dumps(response.json()),
+                   'localdomain': 'http://127.0.0.1:8000/',
+                   'azuredomain': 'https://upstox-app.azurewebsites.net/'}
+      
+            return render(request, 'json_template.html', context)
  
