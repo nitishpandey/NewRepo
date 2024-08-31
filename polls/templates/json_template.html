@@ -6,13 +6,18 @@
 <body>
 
     <h1>JSON Data</h1>
-
+    <h3> URL Used: {{url}}</h3>
+    
     <script>
         // Get JSON data from Django context
         const jsonData = {{ my_json_data|safe }};
-
+        const headers = {{headers|safe}};
         // Display the data (you can customize how you present it)
-        document.write("<pre>" + JSON.stringify(jsonData, null, 2) + "</pre>");
+        document.write("<pre>" + JSON.stringify(jsonData, null, 2) + "<br /> Headers:" + JSON.stringify(headers, null, 2) + "</pre>");
+
+       // 
+       // document.write("<pre>" + JSON.stringify(headers, null, 2) + "</pre>");
+
     </script>
     <ol>
         <li>

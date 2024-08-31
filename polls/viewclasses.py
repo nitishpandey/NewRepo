@@ -67,7 +67,7 @@ class userProfile(View):
 class funds(View):
     def get(self, request):
         my_app_config = apps.get_app_config('polls')
-        url = my_app_config.UPSTOX_API +'/user/get-funds-and-margin?segment=SEC'
+        url = my_app_config.UPSTOX_API +'user/get-funds-and-margin?segment=SEC'
 
         headers = {
             'Accept': 'application/json',
@@ -79,7 +79,9 @@ class funds(View):
         print(response.status_code)
         print(response.json())
         context = {'my_json_data': json.dumps(response.json()),
+                   'headers': json.dumps(headers),
                    'localdomain': 'http://127.0.0.1:8000/',
+                   'url':url,
                    'azuredomain': 'https://upstox-app.azurewebsites.net/'}
       
         return render(request, 'json_template.html', context)
