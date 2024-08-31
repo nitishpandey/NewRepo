@@ -54,11 +54,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'upstox-app.urls'
 ALLOWED_HOSTS = ['*']
-
+#\ backslash needs to be escaped and works only on windows. For Linux need to use / and there's no need to escape it
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['upstox-app\\templates'],
+        'DIRS': ['upstox-app/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
