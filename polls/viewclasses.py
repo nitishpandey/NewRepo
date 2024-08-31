@@ -20,7 +20,7 @@ class defaultView(View):
         your_client_secret = 'ojruk78aqh'
         your_redirect_url = localdomain + 'polls'
         
-        api_url = my_app_config.UPSTOX_API +'login/authorization/token'
+        url = api_url = my_app_config.UPSTOX_API +'login/authorization/token'
         headers = {
             'accept': 'application/json',
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -41,9 +41,13 @@ class defaultView(View):
         print(response.json())
         #context = {'message': 'This is a GET request'}
         # return render(request, 'my_template.html', context)
+       
         context = {'my_json_data': json.dumps(response.json()),
-                   'localdomain': localdomain,
-                   'azuredomain': azuredomain}
+                   'headers': json.dumps(headers),
+                   'localdomain': 'http://127.0.0.1:8000/',
+                   'url':url,
+                   'azuredomain': 'https://upstox-app.azurewebsites.net/'}
+      
         a = request.session['token'] = response.json()['access_token']   
         print( a)
         return render(request, 'json_template.html', context)
