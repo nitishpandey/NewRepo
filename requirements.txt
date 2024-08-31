@@ -2,6 +2,5 @@
 toml
 django
 requests
-json
 #gives uuid.py import challenge says syntax error invalid decimal literal at line 138
 #upstox-python-sdk
