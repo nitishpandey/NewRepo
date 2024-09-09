@@ -19,9 +19,9 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path("polls/", include("polls.urls")),
-    path('admin/', admin.site.urls),
-    path("",views.index, name="loginlink"),
-    path("session",views.session, name="sessioncheck")
-
+   path("polls/", include("polls.urls")),
+   path('admin/', admin.site.urls),
+   path("",include("fnoappbe.urls")),
+   path("session",views.session, name="sessioncheck"),
+ 
 ]

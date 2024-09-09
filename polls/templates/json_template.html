@@ -10,7 +10,7 @@
     
     <script>
         // Get JSON data from Django context
-        const jsonData = {{ my_json_data|safe }};
+        const jsonData = {{ response_data|safe }};
         const headers = {{headers|safe}};
         // Display the data (you can customize how you present it)
         document.write("<pre>" + JSON.stringify(jsonData, null, 2) + "<br /> Headers:" + JSON.stringify(headers, null, 2) + "</pre>");
@@ -20,19 +20,22 @@
 
     </script>
     <ol>
-        <li>
-    <a href="{{ localdomain }}">Start again</a> <br /></li>
-        <li>
-    <a href="{{ azuredomain }}"> On azure</a></li>
-    <br />
+        {% for domain in domainsarray %}
+    <p>Name: {{ domain.name }}</p>
+    <p>URL: {{ domain.url }}</p>
+          <li>
+    <a href="{{ domain.url }}">Start again</a> <br /></li>
+     
 
         <li>
-    <a href="{{ localdomain}}polls/funds">See funds on localhost </a> <br />
+    <a href="{{ domain.url}}polls/funds?state={{ domain.name}}">See funds </a> <br />
             </li>
 
     <li>
-    <a href="{{ localdomain}}polls/optionsdata">See options data on localhost </a> <br />
+    <a href="{{ domain.url}}polls/optionsdata?state={{ domain.name}}">See options data </a> <br />
             </li>
+{% endfor %}
+      
     
     </ol>
 

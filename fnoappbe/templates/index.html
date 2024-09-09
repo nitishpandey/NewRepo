@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <title>{% block title %}My FNO App{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>
+            {% block header %}Select An Action{% endblock %}
+        </h1>
+        <nav>
+
+            <!-- display if we have a session access token already available and from prod
+    or local host and set at what time of date
+    -->
+            {% if 'token' in request.session %}
+            <p>Welcome, !</p>  {{ request.session.token }}
+
+            {% else %}
+            <p>You are not logged in. Could not locate the access token in the session.</p>  
+
+            {% endif %}
+            <br />
+            <hr />
+            2f21b28b-6251-4c8e-861f-6218bdf7e4b6
+            <a href="https://api.upstox.com/v2/login/authorization/dialog?response_type=code&client_id=2f21b28b-6251-4c8e-861f-6218bdf7e4b6&redirect_uri=http://127.0.0.1:8000/polls&state=sandbox
+">Login Using localhost</a>		<br />
+            <br />
+            Client id: cc982509-6fa9-4046-939d-41b190aa9252
+
+            <a href="
+		   https://api.upstox.com/v2/login/authorization/dialog?response_type=code&client_id=cc982509-6fa9-4046-939d-41b190aa9252&redirect_uri=https://upstox-app.azurewebsites.net/polls&state=prod"> Lets log in using Prod </a>
+            <br />
+
+            <!--
+     Get Strategy Form (from the form have a link back to this)
+    -->
+            <a href="/fnoapp/strategyprep?state={{ domain.name }}"> See &amp; set strategy</a>
+            <br />
+            <a href="/fnoapp/executestrategy?state={{ domain.name }}"> Execute strategy</a>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+    </footer>
+</body>
+
+</html>

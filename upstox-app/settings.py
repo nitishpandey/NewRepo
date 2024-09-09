@@ -13,44 +13,65 @@ import os
 from pathlib import Path
 from typing import Any
 
+
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 #STATIC_ROOT = BASE_DIR / 'static'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticcollection')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/5.1/howto/static-files/
+
+STATIC_URL = '/static/'
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-@xa*5%@cl&*xks*&*h8x(@+5y%opg-*%g@s-eu!frw&$r7dm0y'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-CSRF_TRUSTED_ORIGINS = ['https://upstox-app.azurewebsites.net']
 
+CSRF_TRUSTED_ORIGINS = ['https://upstox-app.azurewebsites.net', 'http://localhost:3000','http://127.0.0.1:3000']
+CSRF_COOKIE_SAMESITE = None
+#SameSite=None
+#SESSION_COOKIE_DOMAIN='127.0.0.1'
+CSRF_COOKIE_HTTPONLY  = False
 # Application definition
+CORS_ALLOWED_ORIGINS = [
+
+"http://127.0.0.1:3000",
+ 'http://localhost:3000',
+
+]
+CORS_ALLOW_CREDENTIALS = True  # Allow sending cookies in cross-origin requests
+# Database
+# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'corsheaders',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'polls'
-    
-]
+    'polls',
+    'fnoappbe'
+  ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
-]
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
+   ]
 
 ROOT_URLCONF = 'upstox-app.urls'
 ALLOWED_HOSTS = ['*']
@@ -61,7 +82,7 @@ TEMPLATES = [
         'DIRS': ['upstox-app/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
-            'context_processors': [
+                  'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -72,10 +93,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'upstox-app.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -114,12 +131,7 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-
-STATIC_URL = 'static/'
+ 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
