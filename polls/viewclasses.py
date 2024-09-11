@@ -104,11 +104,11 @@ class funds(View):
 
         headers = {
             'Accept': 'application/json',
-            'Authorization': f'Bearer {request.session["token"]}'
+            'Authorization': f'Bearer {request.session["auth_code"]}'
         }
 
         response = requests.get(url, headers=headers)
-        print(request.session["token"])
+        print(request.session["auth_code"])
         print(response.status_code)
         print(response.json()) 
         context = defaultview.setcontext_(response,headers,url)
@@ -136,7 +136,7 @@ class optionsdata(View):
             url = defaultview.upstoxapiendpoint + f'option/chain?state={host}' 
             headers = {
             'Accept': 'application/json',
-            'Authorization': f'Bearer {request.session["token"]}'
+            'Authorization': f'Bearer {request.session["auth_code"]}'
             }
             counter = 0
             while options_data_not_found:

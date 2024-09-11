@@ -5,7 +5,7 @@ function Homepage({ logo }) {
     const navigate = useNavigate();
 
   const  loginpage = (nextpage) => {
-        navigate('/');
+        navigate('/'+ nextpage);
         return;
     }
     return (
@@ -20,7 +20,7 @@ function Homepage({ logo }) {
                 <a
                     className="App-link"
                     href=""
-                    onClick={loginpage('loginform')}
+                    onClick={() => loginpage('loginform')}
                     rel="noopener noreferrer"
                 >
                     Start Trading on Upstox For Options.

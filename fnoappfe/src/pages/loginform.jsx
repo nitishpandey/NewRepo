@@ -1,21 +1,31 @@
 import React, { useState ,useEffect } from 'react';
 import { useContext } from 'react';
-import { bebaseurl, Useremail } from '../support/context.jsx';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import {  appcontext } from '../support/context.jsx';
+import {
+    Box,
+    ChakraBaseProvider,
+    extendBaseTheme,
+    theme as chakraTheme,
+} from '@chakra-ui/react'
+const { Button } = chakraTheme.components
 
 
 function EmailForm({screen}) {
     const [email, setEmail] = useState('');
-    const bebaseurl1 = useContext(bebaseurl);
-    const [message, setMessage] = useState(''); // For displaying success/error messages
+    const [bebaseurl, upstoxloginurl] = useContext(appcontext);
+    
+ const [message, setMessage] = useState(''); // For displaying success/error messages
     const navigate = useNavigate(); // Get the navigate function
 
-   
+    console.log("BEbaseurl" + bebaseurl);
+    console.log("upstoxloginurl" + upstoxloginurl);
+
     const handleSubmit = async (event) => {
         event.preventDefault(); // Prevent default form submission behavior
 
         try {
-            const response = await fetch(bebaseurl1 + '/login', {
+            const response = await fetch(bebaseurl + '/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -27,11 +37,8 @@ function EmailForm({screen}) {
 
             if (response.ok) {
                 setMessage('Email submitted successfully!');
-                <Useremail.Provider value={email}>
-
-
-                </Useremail.Provider >
-                navigate('/upstox-login');
+                console.log(upstoxloginurl);
+                window.location.href = upstoxloginurl;
 
             } else {
                 setMessage('Error submitting email. Please try again.');
@@ -46,7 +53,7 @@ function EmailForm({screen}) {
         <form onSubmit={handleSubmit}>
             <div>
                 <label htmlFor="email">Email:</label>
-                <input
+                 <input
                     type="email"
                     id="email"
                     value={email2}
