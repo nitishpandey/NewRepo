@@ -1,0 +1,20 @@
+
+services:
+  backend: 
+    # ... other configurations
+    image: upstoxbe:latest
+    ports:
+     - "8000:8000" 
+    
+    command: python manage.py runserver 0.0.0.0:8000
+  
+  frontend:
+   depends_on: 
+       - backend
+    
+
+   image: upstoxreactclient:latest
+   ports:
+     - "3000:3000"
+   command: npm start
+

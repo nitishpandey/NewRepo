@@ -1,8 +1,7 @@
-import { useState, useContext, useEffect, createContext } from 'react';
+import {  useContext, useEffect } from 'react';
 import { appcontext } from '../support/context.jsx';
 
 export default function CSRFToken() {
-    const [data, setData] = useState(null);
     const [bebaseurl, upstoxloginurl] = useContext(appcontext);
 
     useEffect(() => {
@@ -27,6 +26,6 @@ export default function CSRFToken() {
             console.error('There was a problem with the fetch operation:', error);
             // Display an error message to the user (e.g., "Unable to connect to the server")
         });
-    }, []);
+    }, [bebaseurl]);
     return <> </>;
 }

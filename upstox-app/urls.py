@@ -19,7 +19,7 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-   path("polls/", include("polls.urls")),
+   path("authcode", include("polls.urls")),
    path('admin/', admin.site.urls),
    path("",include("fnoappbe.urls")),
    path("session",views.session, name="sessioncheck"),

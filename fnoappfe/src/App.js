@@ -2,12 +2,9 @@ import logo from './logo.svg';
 import './App.css';
 import { ChakraProvider } from '@chakra-ui/react'
 import { useState, useContext, useEffect, createContext } from 'react';
-import Homepage from './pages/homepage';
-import Layout from './pages/layout';
-import NoPage from './pages/404';
-import EmailForm from './pages/loginform';
-import TradingPage from './pages/trading';
-import APICredentialsForm from './pages/apiform';
+import Layout from './components/layout';
+
+import MyRoutes from './support/routes'
 import { Appcredentials, Mode, appcontext } from './support/context.jsx';
 import CSRFToken from './support/csrf.jsx';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
@@ -24,16 +21,7 @@ const theme = extendBaseTheme({
         Button,
     },
 })
-function AboutUsPage() {
 
-    return (
-        <div>
-            <h1>About Us</h1>
-            <p>Learn more about our company and team.</p>
-           
-        </div>
-    );
-}
 
 function App() {
    //set up cookies for csrf
@@ -51,51 +39,40 @@ function App() {
 
 
 
-    const redirect_uri = bebaseurl + '/polls&state=' + (currentmode === 'localhost' ? 'sandbox' : 'prod');
+    const redirect_uri = bebaseurl + '/authcode&state=' + (currentmode === 'localhost' ? 'sandbox' : 'prod');
     const upstoxloginurl = upstoxdialogurlstem +
         clientid + '&redirect_uri=' + redirect_uri;
 
     const appcredentials = createContext([bebaseurl, upstoxloginurl])
     
 
-    return (<>
+    return (
             <BrowserRouter>
-                <ChakraBaseProvider theme={theme}>
+                <ChakraBaseProvider theme={chakraTheme}>
                 <header>
                     <Box as="h1" fontSize="2xl" mb={4}>Algorithmic Trades On Upstox</Box>
                     <Box p={4} borderWidth="1px" borderRadius="md">
-                  <nav>
-                    <ul>
-                        <li><Link to="/">Landing Page</Link></li>
-                        <li><Link to="/about">About Us</Link></li>
-                    </ul>
-                    </nav>
-                    <appcontext.Provider value={[bebaseurl, upstoxloginurl]} >
-                        <CSRFToken />
-                        <Routes>
-                            <Route path="/" element={<Layout />}>
-                                <Route index element={<Homepage />} />
-                                <Route path="loginform" element={<EmailForm />} />
-                                <Route path="upstox-credentials" element={<APICredentialsForm />} />
-                                <Route path="funds" element={<TradingPage />} />
-                                <Route path="about" element={<AboutUsPage />} />
-                                <Route path="*" element={<NoPage />} />
-                            </Route>
-                        </Routes>
-                        </appcontext.Provider>
+                
+                   
                         </Box>
-               </header>
-                <main style={{}}>
-                    <Box p={4} borderWidth="1px" borderRadius="md">
-                 
-                    </Box>
-                </main>
+                </header>
+                <div className="container">
+                    <Layout />
+                <main className="content">
+                        <appcontext.Provider value={[bebaseurl, upstoxloginurl]} >
+                            <CSRFToken />
+                            <MyRoutes />
+
+                        </appcontext.Provider>
+                  
+                    </main>
+                    </div>
                 <footer>
-                    <Box as="p" textAlign="center" mt={8}>&copy; 2024 My Website</Box>
+                    <Box as="p" textAlign="center" mt={8}>&copy; 2024 My Upstox Algo Trading Website</Box>
                 </footer>
           </ChakraBaseProvider>
 
-            </BrowserRouter> </>
+            </BrowserRouter> 
         );
     }
 

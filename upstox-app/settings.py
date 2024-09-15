@@ -19,8 +19,10 @@ from typing import Any
 DEBUG = True
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+print(BASE_DIR)
+print(__file__)
 #STATIC_ROOT = BASE_DIR / 'static'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticcollection')
+STATIC_ROOT = os.path.join(str(BASE_DIR), 'staticcollection')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -44,6 +46,7 @@ CORS_ALLOWED_ORIGINS = [
 
 "http://127.0.0.1:3000",
  'http://localhost:3000',
+ 'http://0.0.0.0:4000'
 
 ]
 CORS_ALLOW_CREDENTIALS = True  # Allow sending cookies in cross-origin requests
@@ -59,7 +62,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'polls',
-    'fnoappbe'
+    'fnoappbe' #required to scan for templates folder 
   ]
 
 MIDDLEWARE = [
@@ -79,7 +82,7 @@ ALLOWED_HOSTS = ['*']
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['upstox-app/templates'],
+        'DIRS': ['upstox-app/templates'], #could not list the app in installed apps because of the hyphen
         'APP_DIRS': True,
         'OPTIONS': {
                   'context_processors': [

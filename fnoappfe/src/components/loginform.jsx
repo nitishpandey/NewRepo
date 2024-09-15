@@ -41,7 +41,7 @@ function EmailForm({screen}) {
                 window.location.href = upstoxloginurl;
 
             } else {
-                setMessage('Error submitting email. Please try again.');
+                setMessage('Error submitting email. Please try again. ' + response.statusText+".");
             }
         } catch (error) {
             setMessage('An error occurred. Please check your connection.');
@@ -61,7 +61,7 @@ function EmailForm({screen}) {
                     required
                 />
             </div>
-            <button type="submit">Submit</button>
+            <input type="submit" value="Submit"/>
             {message && <p>{message}</p>}
         </form>
     );

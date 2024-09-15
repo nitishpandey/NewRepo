@@ -27,8 +27,11 @@ def login(request):
         secret = data.get('email')
         request.session['client_id'] = client_id
         request.session['secret'] = secret
-        print(client_id);
-    #else return error code in response so that the user is not taken to upstox login
+        print('The session key when email : '+ request.session['secret']);
+    else:
+        return HttpResponseNotAllowed(['POST']) 
+  
+   #error code in response so that the user is not taken to upstox login
     return render(request, 'index.html')
 
 def emptyjson(request):
@@ -41,3 +44,6 @@ def NotImplementedType(request):
 def get_csrf_token(request):
     token = get_token(request)
     return JsonResponse({'csrfToken': token})
+
+def trades(request):
+    return JsonResponse({'message': 'success'})
