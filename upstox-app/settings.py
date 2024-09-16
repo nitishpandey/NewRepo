@@ -35,23 +35,31 @@ STATIC_URL = '/static/'
 SECRET_KEY = 'django-insecure-@xa*5%@cl&*xks*&*h8x(@+5y%opg-*%g@s-eu!frw&$r7dm0y'
 
 
-
+#the next setting is only required for CSRF for POST methods. When tokens are not enough. Origin needs to be from one of these members
 CSRF_TRUSTED_ORIGINS = ['https://upstox-app.azurewebsites.net', 'http://localhost:3000','http://127.0.0.1:3000']
-CSRF_COOKIE_SAMESITE = None
-#SameSite=None
-#SESSION_COOKIE_DOMAIN='127.0.0.1'
+#CSRF_COOKIE_SAMESITE = 'Lax'
+
+#CORS_COOKIE_SAMESITE=   False
+#CSRF_COOKIE_DOMAIN = None
+#SESSION_COOKIE_SAMESITE = False
+#CSRF_COOKIE_SECURE = False
+
 CSRF_COOKIE_HTTPONLY  = False
 # Application definition
+
 CORS_ALLOWED_ORIGINS = [
 
 "http://127.0.0.1:3000",
- 'http://localhost:3000',
- 'http://0.0.0.0:4000'
+'http://localhost:3000'
 
 ]
+ 
+ 
+
 CORS_ALLOW_CREDENTIALS = True  # Allow sending cookies in cross-origin requests
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
