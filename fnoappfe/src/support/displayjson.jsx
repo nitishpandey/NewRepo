@@ -12,11 +12,12 @@ export function JsonDataDisplay({ jsonData }) {
                         (typeof value === 'object' && value !== null && !Array.isArray(value))
 
                             ? (
-                                <ul><li>  {key.toUpperCase()}: <JsonDataDisplay jsonData={value} />
-                            </li></ul>
-                            ) : (<li key={key}>
-                                {key.toUpperCase()}: {JSON.stringify(value, null, 2)}
-                        </li>)
+                                 <JsonDataDisplay jsonData={value} />
+                           
+                            ) : (<> &nbsp; 
+                                {key.toUpperCase()}:<JsonDataDisplay jsonData={value} />
+                                
+                        </>)
                        ) : ('')
                     )
                 )
@@ -31,27 +32,26 @@ export function JsonDataDisplay({ jsonData }) {
         </>
 
     );
-    if (Array.isArray(jsonData))
-        return (<> {jsonData ? (
-            <div>
+    
+        return (<> {Array.isArray(jsonData) ? (
+            <>
 
-                <ul>
-                    {jsonData.map(([key, value]) =>
+                
+                    {jsonData.map(key =>
                     (
                         
-                            <li key={key}>
-                                    {key.toUpperCase()}: {JSON.stringify(value, null, 2)}
-                                </li>
+                        (typeof jsonData === 'object' && !Array.isArray(key))
+                            ?
+                            (<> <JsonDataDisplay jsonData={key} /> </>):('<>Hi</>')
                         
                     )
                     )
 
                     }
-                </ul>
-
-            </div>
+            
+            </>
         ) : (
-            <p>No data available</p>
+                <>{jsonData}</>
         )}
         </>
 
