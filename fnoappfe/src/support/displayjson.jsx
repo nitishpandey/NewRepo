@@ -1,31 +1,38 @@
 import React from 'react';
 
-export function JsonDataDisplay({ jsonData }) {
+export function JsonDataDisplay({ jsonData, showkey = true }) {
+
+        var childshowKey = false;
+
     if (typeof jsonData === 'object' && !Array.isArray(jsonData))
-    return ( <> {jsonData ? (
-                <div>
+        return (<>
+
+        
+
+            {jsonData ? (
                     
-                    <ul>
+                   <>
                 {Object.entries(jsonData).map(([key, value]) =>
                     (
                     (key !== 'status') ? (
                         (typeof value === 'object' && value !== null && !Array.isArray(value))
 
                             ? (
-                                 <JsonDataDisplay jsonData={value} />
+                                <tr>
+                                    <JsonDataDisplay jsonData={value} />
+                                </tr>
                            
-                            ) : (<> &nbsp; 
-                                {key.toUpperCase()}:<JsonDataDisplay jsonData={value} />
+                            ) : (<td> &nbsp; 
+                                <b>{key.toUpperCase()}</b><JsonDataDisplay jsonData={value} />
                                 
-                        </>)
+                        </td>)
                        ) : ('')
                     )
                 )
 
                 }
-            </ul>
           
-                </div>
+          </>
             ) : (
                 <p>No data available</p>
             )}
@@ -51,7 +58,7 @@ export function JsonDataDisplay({ jsonData }) {
             
             </>
         ) : (
-                <>{jsonData}</>
+                <td>{jsonData}</td>
         )}
         </>
 
