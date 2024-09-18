@@ -5,6 +5,8 @@ FROM python:3.12.6
 # The enviroment variable ensures that the python output is set straight
 # to the terminal with out buffering it first
 ENV PYTHONUNBUFFERED 1
+# Set environment varibles
+ENV PYTHONDONTWRITEBYTECODE 1
 
 # Get the Real World example app
 #RUN git clone https://github.com/nitishpandey/django-realworld-example-app.git /drf_src
@@ -25,11 +27,13 @@ COPY db.sqlite3 .
 
 
 # Install any needed packages specified in requirements.txt
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 VOLUME /drf_src
 
 EXPOSE 8000
+
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "upsto-app.wsgi:application"] 
 
 #CMD python manage.py makemigrations && python manage.py migrate && 
 #CMD python manage.py runserver 0.0.0.0:8000
