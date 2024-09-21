@@ -23,6 +23,7 @@ class defaultView(View):
                 }
         return context
 
+    #default auomatic get invocation for picking up the code from the URL and then fetching the Auth token
     def get(self, request):
         """Handles GET requests to this view."""
         # Logic for processing GET requests (e.g., displaying a form)
@@ -91,13 +92,10 @@ class userProfile(View):
         context = {'my_json_data': json.dumps(jsondata)}
         return render(request, 'json_template.html', context)
 
-class funds(View):
-    def get(self, request):
+class fetcher():
+    def get(self,url):
         defaultview = defaultView()
-
-        host = request.GET.get("state")
-      
-        url = defaultview.upstoxapiendpoint + 'user/get-funds-and-margin?segment=SEC'
+        url = defaultview.upstoxapiendpoint + url 
 
         headers = {
             'Accept': 'application/json',
@@ -108,6 +106,15 @@ class funds(View):
         print(request.session["auth_code"])
         print(response.status_code)
         print(response.json()) 
+
+class funds(View):
+    def get(self, request):
+        defaultview = defaultView()
+        fetcher_ = fetcher()
+
+        host = request.GET.get("state")
+        fetcher_.get('user/get-funds-and-margin?segment=SEC')
+       
         context = defaultview.setcontext_(response,headers,url)
         
       

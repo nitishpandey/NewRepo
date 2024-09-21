@@ -12,7 +12,7 @@ class PollsConfig(AppConfig):
     sandboxclientsecret = 'ojruk78aqh'
     prodclientsecret =  '9t2r4lxi4z'
       
-    UPSTOX_API = 'https://api.upstox.com/v2/'
+    UPSTOX_API = 'https://api.upstox.com/v2'
     domainsarray = { 'sandbox':   { 'name': 'sandbox','url':localdomain,'clientid':sandboxclientid,'clientsecret':sandboxclientsecret},
                        'prod': {'name':'prod', 'url': proddomain,'clientid':prodclientid,'clientsecret':prodclientsecret}
                     }

@@ -6,6 +6,7 @@ from django.views import View
 from django.apps import apps
 import requests
 import json
+from fnoappbe.processors import * 
 
 class defaultView(View):
     def __init__(self):
@@ -121,16 +122,16 @@ class predictor(View):
 class datafetch(View):
     def get(self, request,path_pattern): #3 arguments because we are using re_path
         defaultview = defaultView()
-       # host = request.GET.get("state")
-      
-       #some new syntax for switch. No fall through to next case.
-        match path_pattern:
-            case 'trades':
-                url = defaultview.upstoxapiendpoint + 'portfolio/short-term-positions'
-            case 'funds':
-                url = defaultview.upstoxapiendpoint + 'user/get-funds-and-margin?segment=SEC'
-            case _ :
-                url = defaultview.upstoxapiendpoint + 'option/chain?'
+        app_config =  apps.get_app_config('fnoappbe')
+        usecaseslist = app_config.usecaseslist
+        # host = request.GET.get("state")
+        trades = usecaseslist['trades']
+        funds = usecaseslist['funds']
+        print(usecaseslist)
+        print(path_pattern)
+        #some new syntax for switch. No fall through to next case.
+        url = defaultview.upstoxapiendpoint + usecaseslist[path_pattern]['api']
+        #        url = defaultview.upstoxapiendpoint + 'option/chain?'
             
         #request.session['auth_code']
         #print("Printing session key before making call to see funds:")
@@ -140,16 +141,19 @@ class datafetch(View):
             'Accept': 'application/json',
             'Authorization': f'Bearer {request.session["auth_code"]}'
         }
-        #print(url)
+        print(url)
         if(path_pattern == 'options_chain'):
             response = self.options_chain(request,headers,url)
         else:
             response = requests.get(url, headers=headers)
         
-        accept_header = request.META.get('HTTP_ACCEPT')
         
+        filtered_data = modelFilter(path_pattern,response.json())
+        accept_header = request.META.get('HTTP_ACCEPT')
         if 'application/json' in accept_header:
-            return JsonResponse(response.json())
+            #return filtered data 
+            print(filtered_data)
+            return JsonResponse(filtered_data)
         context = defaultview.setcontext_(response,headers,url)
         
         return render(request, 'json_template.html', context)
