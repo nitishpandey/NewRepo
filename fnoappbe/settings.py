@@ -69,7 +69,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'polls',
+    
     'fnoappbe' #required to scan for templates folder 
   ]
 
@@ -84,13 +84,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware'
    ]
 
-ROOT_URLCONF = 'upstox-app.urls'
+ROOT_URLCONF = 'fnoappbe.urls'
 ALLOWED_HOSTS = ['*']
 #\ backslash needs to be escaped and works only on windows. For Linux need to use / and there's no need to escape it
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['upstox-app/templates'], #could not list the app in installed apps because of the hyphen
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
                   'context_processors': [
@@ -102,6 +102,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'fnoappbe.wsgi.application'
 
