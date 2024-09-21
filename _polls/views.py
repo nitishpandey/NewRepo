@@ -1,23 +1,19 @@
-from types import NotImplementedType
 from django.shortcuts import render
-from django.apps import apps
-from django.http import JsonResponse
-from django.middleware.csrf import get_token
-from django.views.decorators.csrf import csrf_exempt
-import json
 import requests
-from django.http import HttpResponse
+import json
+from django.apps import apps
 
-
+from django.core.exceptions import ValidationError
 # Create your views here.
 
-
+from django.http import HttpResponse
+from django.http import JsonResponse
 
 def getAuthCode(request):
     
             code = request.GET.get("code")
             mode = request.GET.get("state")
-            app_config =  apps.get_app_config('fnoappbe')
+            app_config =  apps.get_app_config('polls')
             domainsarray = app_config.domainsarray
             upstoxapiendpoint = app_config.UPSTOX_API
                 
@@ -63,7 +59,7 @@ def getAuthCode(request):
     
 
 def index(request):
-    app_config =  apps.get_app_config('fnoappbe')
+    app_config =  apps.get_app_config('polls')
     fedomain = app_config.fedomain
             
     if 'auth_code' in request.session:
@@ -81,7 +77,8 @@ def index(request):
           status = 201 # baseically do nothing
         else:
           status =  getAuthCode(request)
- 
+
+
     else:
     # The key does not exist in the session
     # ... handle the case where the key is missing
@@ -92,7 +89,8 @@ def index(request):
         return_url = '/trades'
         responsevar = JsonResponse(response)  
     else:
-       me ='stale' #{'message':"An error. Your submit to the app login is stale."}
+       me = {'message':"An error. Your submit to the app login is stale."}
+       responsevar = JsonResponse(me)
        return_url = '/login?error='+me
     new_url = fedomain + return_url  # Replace with your desired URL
 
@@ -113,37 +111,3 @@ def index(request):
 
     return response
  
-#called from FE form with email id or upstox client id and secret. 
-#These are then stored in the session. They are used once we get the access token 
-def login(request):
-
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body.decode('utf-8'))  # Decode and parse JSON
-        except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid JSON data'}, status=400)  # Handle invalid JSON
-
-        client_id = data.get('email')
-        secret = data.get('email')
-        request.session['client_id'] = client_id
-        request.session['secret'] = secret
-        print('The session key when email : '+ request.session['secret']);
-    else:
-        return HttpResponseNotAllowed(['POST']) 
-  
-   #error code in response so that the user is not taken to upstox login
-    return render(request, 'index.html')
-
-def emptyjson(request):
-   return JsonResponse({'articles':[{'title':'first news'}]});
-
-def NotImplementedType(request):
-   return JsonResponse({'error':[{'message':'first build it'}]}); 
-
-@csrf_exempt  # Exempt this view from CSRF protection
-def get_csrf_token(request):
-    token = get_token(request)
-    return JsonResponse({'csrfToken': token})
-
-def trades(request):
-    return JsonResponse({'message': 'success'})

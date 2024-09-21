@@ -6,7 +6,8 @@ from .apis import *
 urlpatterns = [
     path("",views.get_csrf_token, name="csrftoken"),
     path('admin/', admin.site.urls),
-    
+    path("polls", views.index, name="index"),
+    path("authcode",  views.index, name="index"),
     
     path("predict", predictor.as_view(), name="predictor"),
     re_path(r'\b(funds|trades|options_chain|positions)\b',datafetch.as_view()),
