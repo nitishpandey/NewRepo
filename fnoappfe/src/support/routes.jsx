@@ -27,6 +27,7 @@ function MyRoutes() {
         <Route path="upstox-credentials" element={<APICredentialsForm />} />
                 <Route path="funds" element={<DataFetch />} />
                 <Route path="trades" element={<DataFetch />} />
+                <Route path="positions" element={<DataFetch />} />
                 <Route path="options_chain" element={<DataFetch />} />
                 <Route path="predict" element={<Predictor />} />
 

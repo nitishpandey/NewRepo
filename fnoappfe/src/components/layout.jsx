@@ -16,6 +16,9 @@ const Layout = () => {
                     <Link to="/funds">Funds</Link>
                   </li>
                   <li>
+                      <Link to="/positions">Positions</Link>
+                  </li>
+                  <li>
                       <Link to="/trades">Trades</Link>
                   </li>
                   <li>
