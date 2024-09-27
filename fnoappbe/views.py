@@ -7,12 +7,24 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 import requests
 from django.http import HttpResponse
+from rest_framework import status
+
+# views that do not require logged in state.
 
 
-# Create your views here.
+#view that renders a template that shows the JSON as a table
+def profile(request):
+   
+         jsondata = {'name':''}
+         
+         if 'email' in request.session:
+            jsondata = {'name':request.session['email']}
+             
+         return JsonResponse(jsondata);
 
-
-
+         context = {'my_json_data': json.dumps(jsondata)}
+        
+         return render(request, 'json_template.html', context)
 def getAuthCode(request):
     
             code = request.GET.get("code")
@@ -60,7 +72,10 @@ def getAuthCode(request):
        
             return response.status_code
             print(response.json())
-    
+
+def logout(request):
+    request.session.flush()
+    return JsonResponse({'status':'success'},status=status.HTTP_204_NO_CONTENT)
 
 def index(request):
     app_config =  apps.get_app_config('fnoappbe')
@@ -89,7 +104,7 @@ def index(request):
     
     if(status == 200 or status == 201):
         response = {'response': status, 'message': 'The code is '+ request.session['auth_code'] + 'and ' + request.session.session_key}
-        return_url = '/trades'
+        return_url = ''
         responsevar = JsonResponse(response)  
     else:
        me ='stale' #{'message':"An error. Your submit to the app login is stale."}
@@ -101,7 +116,7 @@ def index(request):
     print(request.session['auth_code'])
     print("printed above")
 
-   
+    #we use javascript to redirect the user to react front end because we don't know how to contact the front end s
     javascript_code = f"""
     <script>
         window.location.href = '{new_url}';
@@ -125,7 +140,7 @@ def login(request):
 
         client_id = data.get('email')
         secret = data.get('email')
-        request.session['client_id'] = client_id
+        request.session['email'] = client_id
         request.session['secret'] = secret
         print('The session key when email : '+ request.session['secret']);
     else:
@@ -144,6 +159,3 @@ def NotImplementedType(request):
 def get_csrf_token(request):
     token = get_token(request)
     return JsonResponse({'csrfToken': token})
-
-def trades(request):
-    return JsonResponse({'message': 'success'})

@@ -1,4 +1,5 @@
-import React, { useState ,useEffect } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import {  appcontext } from '../support/context.jsx';
@@ -12,14 +13,14 @@ const { Button } = chakraTheme.components
 
 
 function EmailForm({screen}) {
-    const [email, setEmail] = useState('');
+    const [email, setEmail] = useState('nitishpandey@gmail.com');
     const [bebaseurl, upstoxloginurl] = useContext(appcontext);
     
  const [message, setMessage] = useState(''); // For displaying success/error messages
     const navigate = useNavigate(); // Get the navigate function
 
     console.log("BEbaseurl" + bebaseurl);
-    console.log("upstoxloginurl" + upstoxloginurl);
+    console.log("upstoxloginurl " + upstoxloginurl);
 
     const handleSubmit = async (event) => {
         event.preventDefault(); // Prevent default form submission behavior
@@ -51,19 +52,20 @@ function EmailForm({screen}) {
     let email2 = email;
     return (
         <form onSubmit={handleSubmit}>
-            <div>
-                <label htmlFor="email">Email:</label>
-                 <input
-                    type="email"
+            <div className="container">
+                <label htmlFor="email">Email: </label> &nbsp;
+                <input
+                     type="email"
                     id="email"
                     value={email2}
                     onChange={(e) => setEmail(e.target.value)}
                     required
                 />
-            </div>
-            <input type="submit" value="Submit"/>
-            {message && <p>{message}</p>}
-        </form>
+                <div className="Table">
+                <input type="submit" className="Button" value="Go To Upstox" />
+              
+                </div>  
+            </div>{message && <p>{message}</p>}  </form>
     );
 }
 

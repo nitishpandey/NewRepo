@@ -8,9 +8,7 @@ const Layout = () => {
           <li> 
                <Link to="/">Home</Link>
                   </li>
-                  <li>
-                      <Link to="/loginform">Start Upstox Session</Link>
-                  </li>
+               
 
                   <li>
                     <Link to="/funds">Funds</Link>
@@ -34,7 +32,10 @@ const Layout = () => {
                       <Link to="/predict?index=Nifty50">Nifty Options Trade?</Link>
                   </li>
                   <li>
-                      <Link to="/upstox-credentials">Provide Your Upstox App Client id</Link>
+                      <Link to="/profile">Your Upstox App Client id</Link>
+                  </li>
+                  <li>
+                      <Link to="/logout">Logout</Link>
                   </li>
                   <li>
                       <Link to="/about">About This Platform</Link>
@@ -43,7 +44,7 @@ const Layout = () => {
         </ul>
       </nav>
 
-      <Outlet />
+
     </>
   )
 };

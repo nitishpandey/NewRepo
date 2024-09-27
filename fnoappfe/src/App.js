@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+
 import './App.css';
 import { ChakraProvider } from '@chakra-ui/react'
 import { useState, useContext, useEffect, createContext } from 'react';
@@ -14,11 +14,12 @@ import { Box,
     theme as chakraTheme,
 } from '@chakra-ui/react'
 
-const { Button } = chakraTheme.components
+const { Button , Table} = chakraTheme.components
 
 const theme = extendBaseTheme({
     components: {
         Button,
+        Table,
     },
 })
 
@@ -57,8 +58,8 @@ function App() {
                         </Box>
                 </header>
                 <div className="container">
-                    <Layout />
-                <main className="content">
+                    <Layout className="Table" />
+                    <main className="content">
                         <appcontext.Provider value={[bebaseurl, upstoxloginurl]} >
                             <CSRFToken />
                             <MyRoutes />

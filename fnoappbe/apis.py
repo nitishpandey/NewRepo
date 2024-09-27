@@ -7,6 +7,7 @@ from django.apps import apps
 import requests
 import json
 from fnoappbe.processors import * 
+from fnoappbe.utils.customhttp import * 
 
 class defaultView(View):
     def __init__(self):
@@ -70,7 +71,7 @@ class defaultView(View):
             #return HttpResponse(response.json()['errors'][0]['message'] + "<br />Check the Auth Code Request Request")
             context = {'my_json_data': json.dumps(response.json())}
             return render(request, 'json_template.html', context)
-
+         
         #context = {'message': 'This is a GET request'}
         # return render(request, 'my_template.html', context)
         context = self.setcontext_(response,headers,url)
@@ -89,12 +90,7 @@ class defaultView(View):
 
   
 
-#view that renders a template that shows the JSON as a table
-class userProfile(View):
-    def get(self,request):
-        jsondata = request.session['userProfile']
-        context = {'my_json_data': json.dumps(jsondata)}
-        return render(request, 'json_template.html', context)
+
 
 class predictor(View):
     def get(self, request): 
@@ -122,33 +118,38 @@ class predictor(View):
 class datafetch(View):
     def get(self, request,path_pattern): #3 arguments because we are using re_path
         defaultview = defaultView()
-        app_config =  apps.get_app_config('fnoappbe')
+        app_config =  apps.get_app_config( 'fnoappbe')
         usecaseslist = app_config.usecaseslist
-        # host = request.GET.get("state")
-        trades = usecaseslist['trades']
-        funds = usecaseslist['funds']
-        print(usecaseslist)
-        print(path_pattern)
-        #some new syntax for switch. No fall through to next case.
+        
+       
+        
         url = defaultview.upstoxapiendpoint + usecaseslist[path_pattern]['api']
         #        url = defaultview.upstoxapiendpoint + 'option/chain?'
             
         #request.session['auth_code']
         #print("Printing session key before making call to see funds:")
         #print(request.session.session_key)
-       
-        headers = {
-            'Accept': 'application/json',
-            'Authorization': f'Bearer {request.session["auth_code"]}'
-        }
+        try:
+            headers = {
+                'Accept': 'application/json',
+                'Authorization': f'Bearer {request.session["auth_code"]}'
+            }
+        except:
+            return JsonResponse({'status':'error','message':"please log in again"},status=403)
         print(url)
+       
         if(path_pattern == 'options_chain'):
             response = self.options_chain(request,headers,url)
         else:
-            response = requests.get(url, headers=headers)
+            response = make_get_call(request,url,{}, headers)
+       #make_get_call(request,url,params={}, header={})
         
+        response_dict = json.loads(response.content.decode('utf-8'))
+        print(response_dict['status'])
+        if(response_dict['status'] == 'error'):
+                return response
         
-        filtered_data = modelFilter(path_pattern,response.json())
+        filtered_data = modelFilter(path_pattern,response_dict)
         accept_header = request.META.get('HTTP_ACCEPT')
         if 'application/json' in accept_header:
             #return filtered data 
@@ -157,8 +158,6 @@ class datafetch(View):
         context = defaultview.setcontext_(response,headers,url)
         
         return render(request, 'json_template.html', context)
-
-     
     
         
     
@@ -183,20 +182,20 @@ class datafetch(View):
                     'instrument_key': instrument ,
                     'expiry_date': targetdate
                 }
-
-                response = requests.get(url, params=params, headers=headers)
-                responsedata = response.json()
-               # print(response)
-               # print(responsedata)
+                 
+                response = make_get_call(request,url, params, headers)
+            #make_get_call(request,url,params={}, header={})
+            
                 counter += 1
-                if responsedata['data']:
-                    options_data_not_found = False
+                if 'data' in responsedata:
+                    if responsedata['data']:
+                        options_data_not_found = False
                 if counter == 11: #max days to try
                     options_data_not_found = False
                 
                 
                 targetdate  = targetdate + timedelta(1)
-            print(response)
+            
             return response
 
            
