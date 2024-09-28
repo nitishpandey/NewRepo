@@ -1,5 +1,5 @@
 import json
-from    .models import Position
+from    .models import Position, Trade
 from django.apps import apps
 
 #This is used by the data fetching class in apis.py to conver the data to required keys before
@@ -8,7 +8,7 @@ def modelFilter(model, jsondata):
      app_config =  apps.get_app_config('fnoappbe')
      usecaseslist = app_config.usecaseslist
       
-     if (model == usecaseslist['positions']):
+     if (model == 'positions'):
         #data_dict = json.loads(jsondata)
         data_dict = jsondata
         # Get the field names from the model
@@ -24,7 +24,7 @@ def modelFilter(model, jsondata):
         #filtered_data = {k: v for k, v in data_dict['data'].items() if k in model_fields}
         print(json.dumps(filtered_array))
         return {'Data': filtered_array}
-     if (model == usecaseslist['trades']):
+     if (model == 'trades'):
         #data_dict = json.loads(jsondata)
         data_dict = jsondata
         # Get the field names from the model

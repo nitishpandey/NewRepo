@@ -17,7 +17,7 @@ class Trade(models.Model):
     transaction_type = models.CharField(max_length=10, blank=True, null=True)
     quantity = models.IntegerField(blank=True, null=True)
     #exchange_order_id = models.CharField(max_length=50, blank=True, null=True)
-    order_id = models.CharField(max_length=50, blank=True, null=True)
+    #order_id = models.CharField(max_length=50, blank=True, null=True)
     exchange_timestamp = models.DateTimeField(blank=True, null=True)
     average_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     #trade_id = models.CharField(max_length=50, blank=True, null=True)
