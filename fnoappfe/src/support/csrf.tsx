@@ -1,5 +1,5 @@
 import {  useContext, useEffect } from 'react';
-import { appcontext } from '../support/context.jsx';
+import { appcontext } from '../support/context';
 
 export default function CSRFToken() {
     const [bebaseurl, upstoxloginurl] = useContext(appcontext);

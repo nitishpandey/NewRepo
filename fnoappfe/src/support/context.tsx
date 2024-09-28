@@ -1,6 +1,11 @@
 import { createContext } from 'react';
-export const Mode = createContext('localhost'); //mixed, prod
-export const appcontext = createContext();
+
+
+
+export const Mode = createContext('localhost'); //other values based on environment can be mixed, prod
+export const appcontext = createContext([]); // this value is updated in app.js
+
+
 export const Appcredentials = createContext({
     'localhost': {
         'bebaseurl': 'http://127.0.0.1:8000',

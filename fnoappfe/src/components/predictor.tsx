@@ -1,10 +1,9 @@
 
 import { useState, useContext, useEffect } from 'react';
-import { appcontext } from '../support/context.jsx';
+import { appcontext } from '../support/context';
 import { useFetchData } from '../support/fetch';
-import { JsonDataDisplay } from '../support/displayjson';
 import { useLocation } from 'react-router-dom';
-
+import { JsonDataDisplay } from '../support/displayjson';
 
 /*
  
@@ -31,7 +30,7 @@ function Predictor() {
         setRefreshTrigger(refreshTrigger => refreshTrigger + 1);
     }
  
-   if (loading) return <p>Loading...</p>;
+   if (loading) return (<p>Loading...</p>);
    if (error) return <p>Error: {error.message}</p>;
 
        return (

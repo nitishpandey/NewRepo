@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import {  appcontext } from '../support/context.jsx';
+import {  appcontext } from '../support/context';
 import {
     Box,
     ChakraBaseProvider,
@@ -12,7 +12,7 @@ import {
 const { Button } = chakraTheme.components
 
 
-function EmailForm({screen}) {
+function EmailForm() {
     const [email, setEmail] = useState('nitishpandey@gmail.com');
     const [bebaseurl, upstoxloginurl] = useContext(appcontext);
     
@@ -22,15 +22,18 @@ function EmailForm({screen}) {
     console.log("BEbaseurl" + bebaseurl);
     console.log("upstoxloginurl " + upstoxloginurl);
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = async (event: React.MouseEvent<HTMLFormElement>) => {
         event.preventDefault(); // Prevent default form submission behavior
+        let xcsrftoken: any;
+
+        xcsrftoken = localStorage.getItem('csrfToken');
 
         try {
             const response = await fetch(bebaseurl + '/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRFToken': localStorage.getItem('csrfToken')
+                    'X-CSRFToken': xcsrftoken
                 },
                 body: JSON.stringify({ email }),
                 credentials: 'include',  // Include cookies in the request

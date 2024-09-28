@@ -1,6 +1,6 @@
-import { Outlet, Link } from "react-router-dom";
+import {  Link } from "react-router-dom";
 
-const Layout = () => {
+const Menu = () => {
   return (
       <>
           <nav className="menu">
@@ -26,13 +26,16 @@ const Layout = () => {
                       <Link to="/options_chain?index=BN">BN Options Data</Link>
                   </li>
                   <li>
-                      <Link to="/predict?index=BN">BN Options Trade?</Link>
+                      <Link to="/trades?index=BN">BN Options Trade?</Link>
                   </li>
                   <li>
-                      <Link to="/predict?index=Nifty50">Nifty Options Trade?</Link>
+                      <Link to="/trades?index=Nifty50">Nifty Options Trade?</Link>
                   </li>
                   <li>
                       <Link to="/profile">Your Upstox App Client id</Link>
+                  </li>
+                  <li>
+                      <Link to="/loginform">Login</Link>
                   </li>
                   <li>
                       <Link to="/logout">Logout</Link>
@@ -49,4 +52,4 @@ const Layout = () => {
   )
 };
 
-export default Layout;
+export default Menu;

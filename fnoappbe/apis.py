@@ -185,7 +185,7 @@ class datafetch(View):
                  
                 response = make_get_call(request,url, params, headers)
             #make_get_call(request,url,params={}, header={})
-            
+                responsedata = json.loads(response.content.decode('utf-8'))
                 counter += 1
                 if 'data' in responsedata:
                     if responsedata['data']:

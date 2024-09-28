@@ -2,11 +2,11 @@
 import './App.css';
 import { ChakraProvider } from '@chakra-ui/react'
 import { useState, useContext, useEffect, createContext } from 'react';
-import Layout from './components/layout';
+import Menu from './components/menu';
 
 import MyRoutes from './support/routes'
-import { Appcredentials, Mode, appcontext } from './support/context.jsx';
-import CSRFToken from './support/csrf.jsx';
+import { Appcredentials, Mode, appcontext } from './support/context';
+import CSRFToken from './support/csrf';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { Box, 
     ChakraBaseProvider,
@@ -58,7 +58,7 @@ function App() {
                         </Box>
                 </header>
                 <div className="container">
-                    <Layout className="Table" />
+                    <Menu  />
                     <main className="content">
                         <appcontext.Provider value={[bebaseurl, upstoxloginurl]} >
                             <CSRFToken />

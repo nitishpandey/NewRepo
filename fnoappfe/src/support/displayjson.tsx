@@ -1,6 +1,10 @@
 import React from 'react';
+interface JsonDataDisplayType {
+    jsonData: string|object,
+    showkey?:boolean
+};
 
-export function JsonDataDisplay({ jsonData, showkey = true }) {
+export function JsonDataDisplay({ jsonData, showkey = true }: JsonDataDisplayType) {
 
         var childshowKey = false;
 
@@ -11,16 +15,14 @@ export function JsonDataDisplay({ jsonData, showkey = true }) {
 
             {jsonData ? (
                     
-                   <>
+                   <tr>
                 {Object.entries(jsonData).map(([key, value]) =>
                     (
                     (key !== 'status') ? (
                         (typeof value === 'object' && value !== null && !Array.isArray(value))
 
                             ? (
-                                <tr>
-                                    <JsonDataDisplay jsonData={value} />
-                                </tr>
+                                    <JsonDataDisplay jsonData={value} /> 
                            
                             ) : (<td> &nbsp; 
                                 <b>{key.toUpperCase()}</b><JsonDataDisplay jsonData={value} />
@@ -32,7 +34,7 @@ export function JsonDataDisplay({ jsonData, showkey = true }) {
 
                 }
           
-          </>
+          </tr>
             ) : (
                 <p>No data available</p>
             )}
