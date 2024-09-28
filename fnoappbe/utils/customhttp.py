@@ -19,7 +19,7 @@ def make_get_call(request,url,params={}, header={}):
     except requests.exceptions.HTTPError as e:
         # Handle HTTP errors (4xx and 5xx status codes)
         logout(request)
-        return JsonResponse({'status':'error','message': 'No Longer Logged In','url':'/login'},status=response.status)
+        return JsonResponse({'status':'error','message': 'No Longer Logged In','url':'/login'},status=response.status_code)
         
     except json.JSONDecodeError as e:
                      # Handle invalid JSON responses
